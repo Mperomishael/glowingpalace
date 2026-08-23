@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    @apply antialiased overflow-x-clip bg-zinc-50 text-zinc-900;
+  }
+  .font-serif {
+    font-family: 'Crimson Text', serif;
+  }
+  ::selection {
+    background-color: rgba(124, 58, 237, 0.22);
+    color: #1f1003;
+  }
+  :focus-visible {
+    outline: 2px solid #7c3aed;
+    outline-offset: 2px;
+  }
+}
+
+html { scroll-behavior: smooth; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes fadeInDownCustom {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-down {
+  animation: fadeInDownCustom 0.2s ease-out forwards;
+}
+
+.nav-link { position: relative; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0; height: 2px;
+  bottom: -2px; left: 0;
+  background-color: #7c3aed;
+  transition: all 0.3s ease;
+}
+.nav-link:hover::after { width: 100%; }
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* ===== Hero video – clearer & more saturated ===== */
+.hero-video {
+  /* boost saturation & contrast slightly for a richer look */
+  filter: saturate(1.25) contrast(1.08) brightness(1.05);
+  /* hardware acceleration */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  /* smoother scaling on different screens */
+  object-fit: cover;
+  object-position: center;
+}
+
+/* optional: reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    filter: none;
+  }
+}
+
+.gallery-img {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gallery-img:hover { transform: scale(1.08); }
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton-preload {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite linear;
+}
+.skeleton-preload-dark {
+  background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite linear;
+}
+
+/* Pure full-bleed shiny blinds skeleton (no UI chrome) */
+@keyframes blinds-shimmer {
+  0%   { background-position: -150% 0, 0 0; }
+  100% { background-position:  250% 0, 0 0; }
+}
+.hero-skeleton-blinds {
+  background:
+    linear-gradient(
+      100deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(255, 255, 255, 0.04) 44%,
+      rgba(255, 255, 255, 0.12) 50%,
+      rgba(255, 255, 255, 0.04) 56%,
+      transparent 62%,
+      transparent 100%
+    ),
+    linear-gradient(180deg, #09090b 0%, #18181b 45%, #0c0c0e 100%);
+  background-size: 180% 100%, 100% 100%;
+  animation: blinds-shimmer 1.65s ease-in-out infinite;
+}
+
+.reveal-card {
+  opacity: 0;
+  transform: translateX(4rem);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal-card.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Fall in / fly out staggered media & book cards */
+@keyframes fall-in {
+  from {
+    opacity: 0;
+    transform: translateY(-2.5rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes fly-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(2rem) scale(0.94);
+  }
+}
+
+.fall-item {
+  /* default visible — never blank before JS/observer */
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.fall-item.is-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.fall-item.is-out {
+  opacity: 0;
+  transform: translateY(1.25rem) scale(0.96);
+  pointer-events: none;
+}
+/* Before first observer tick, keep content on screen */
+.fall-item:not(.is-in):not(.is-out) {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fall-item,
+  .fall-item.is-out {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+}
