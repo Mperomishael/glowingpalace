@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
   onOpenLiveModal: () => void;
 }
 
-export default function Navbar({ onOpenLiveModal }: NavbarProps) {
+export default function Navbar({ onOpenLiveModal: _onOpenLiveModal }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMedia } from '../hooks/useMedia';
 
 export default function FeaturesSection() {

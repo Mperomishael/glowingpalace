@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Play, Headphones, Download, X, Maximize2, ArrowRight, Calendar } from 'lucide-react';
-import { useMedia, formatSermonDate } from '../hooks/useMedia';
+import { useMedia, formatSermonDate } from '../../hooks/useMedia';
 
 function youtubeEmbedUrl(youtubeUrl?: string) {
   if (!youtubeUrl) return '';

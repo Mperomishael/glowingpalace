@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, Download, ArrowRight } from 'lucide-react';
+import { BookOpen, ArrowRight } from 'lucide-react';
 import { useMedia } from '../hooks/useMedia';
 import { useScrollReveal, staggerDelay } from '../hooks/useScrollReveal';
 
