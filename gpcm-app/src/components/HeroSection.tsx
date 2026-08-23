@@ -123,35 +123,96 @@ export default function HeroSection({ onOpenLiveModal }: HeroSectionProps) {
       <div style={pinStyle} className="flex items-center justify-center overflow-hidden pt-14">
       {showLoader && (
         <div
-          className="absolute inset-0 z-30 bg-zinc-950 flex flex-col overflow-hidden"
+          className="absolute inset-0 z-30 bg-zinc-950 flex flex-col items-center justify-center overflow-hidden"
           aria-hidden="true"
           aria-busy="true"
         >
-          <div className="h-14 border-b border-white/5 flex items-center px-4 sm:px-6 gap-3 shrink-0">
-            <div className="w-9 h-9 rounded-xl skeleton-preload-dark shrink-0" />
-            <div className="h-3 w-24 rounded-full skeleton-preload-dark" />
-            <div className="flex-1" />
-            <div className="hidden sm:flex gap-3">
-              <div className="h-2.5 w-12 rounded-full skeleton-preload-dark" />
-              <div className="h-2.5 w-12 rounded-full skeleton-preload-dark" />
-              <div className="h-2.5 w-14 rounded-full skeleton-preload-dark" />
-            </div>
-          </div>
-
-          <div className="flex-1 flex flex-col items-center justify-center px-6 gap-4 sm:gap-5">
-            <div className="h-8 sm:h-10 w-[85%] max-w-md rounded-lg skeleton-preload-dark" />
-            <div className="h-8 sm:h-10 w-[65%] max-w-sm rounded-lg skeleton-preload-dark" />
-            <div className="h-3 w-40 sm:w-48 rounded-full skeleton-preload-dark mt-2 opacity-70" />
-            <div className="flex flex-col sm:flex-row gap-3 mt-6 w-full max-w-xs sm:max-w-md">
-              <div className="h-11 flex-1 rounded-2xl skeleton-preload-dark" />
-              <div className="h-11 flex-1 rounded-2xl skeleton-preload-dark opacity-60" />
-            </div>
-          </div>
-
-          <div className="shrink-0 px-4 pb-6 space-y-3 opacity-40">
-            <div className="h-3 w-28 mx-auto rounded-full skeleton-preload-dark" />
-            <div className="h-4 w-48 mx-auto rounded-full skeleton-preload-dark" />
-          </div>
+          {/* Minimal palace / throne mark — lightweight SVG */}
+          <svg
+            viewBox="0 0 120 100"
+            className="w-24 h-20 sm:w-28 sm:h-24 text-white/15"
+            fill="currentColor"
+            role="img"
+            aria-label="Loading"
+          >
+            {/* Base platform */}
+            <rect
+              className="palace-loader-block"
+              x="18"
+              y="78"
+              width="84"
+              height="8"
+              rx="1.5"
+              style={{ animationDelay: '0.05s' }}
+            />
+            {/* Seat */}
+            <rect
+              className="palace-loader-block"
+              x="32"
+              y="58"
+              width="56"
+              height="20"
+              rx="1.5"
+              style={{ animationDelay: '0.18s' }}
+            />
+            {/* Left pillar */}
+            <rect
+              className="palace-loader-block"
+              x="28"
+              y="28"
+              width="10"
+              height="30"
+              rx="1"
+              style={{ animationDelay: '0.32s' }}
+            />
+            {/* Right pillar */}
+            <rect
+              className="palace-loader-block"
+              x="82"
+              y="28"
+              width="10"
+              height="30"
+              rx="1"
+              style={{ animationDelay: '0.38s' }}
+            />
+            {/* Backrest center */}
+            <rect
+              className="palace-loader-block"
+              x="48"
+              y="36"
+              width="24"
+              height="22"
+              rx="1"
+              style={{ animationDelay: '0.48s' }}
+            />
+            {/* Crown / pediment blocks */}
+            <rect
+              className="palace-loader-block"
+              x="42"
+              y="22"
+              width="36"
+              height="8"
+              rx="1"
+              style={{ animationDelay: '0.58s' }}
+            />
+            <rect
+              className="palace-loader-block"
+              x="52"
+              y="12"
+              width="16"
+              height="10"
+              rx="1"
+              style={{ animationDelay: '0.68s' }}
+            />
+            {/* Light line along the crown edge */}
+            <path
+              className="palace-loader-glow"
+              d="M 28 28 L 42 22 L 52 12 L 68 12 L 78 22 L 92 28"
+            />
+          </svg>
+          <p className="mt-6 text-[11px] sm:text-xs tracking-[0.2em] uppercase text-white/35 font-medium">
+            Glowing Palace
+          </p>
         </div>
       )}
 
@@ -170,7 +231,14 @@ export default function HeroSection({ onOpenLiveModal }: HeroSectionProps) {
         Your browser does not support the video tag.
       </video>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/35 to-black/65 z-10" />
+      <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-black/25 via-black/30 to-black/60" />
+      <div
+        className="absolute inset-0 z-10 pointer-events-none opacity-40"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 50% at 50% 35%, rgba(255,245,230,0.12) 0%, transparent 65%)',
+        }}
+      />
 
       <div
         className={`relative z-20 max-w-5xl mx-auto px-4 sm:px-6 text-center text-white transition-all duration-700
