@@ -190,7 +190,7 @@ export default function WhatsAppFloat() {
     setPos(clampPos(d.sx + dx, d.sy + dy));
   };
 
-  const onPointerUp = (e: React.PointerEvent) => {
+  const onPointerUp = (_e: React.PointerEvent) => {
     const d = dragRef.current;
     dragRef.current = null;
     setDragging(false);
