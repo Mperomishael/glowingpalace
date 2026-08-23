@@ -12,7 +12,7 @@ const MESSAGES = [
   },
 ];
 
-const MIN_LOADER_MS = 2200;
+const MIN_LOADER_MS = 2600;
 
 interface HeroSectionProps {
   onOpenLiveModal?: () => void;
@@ -127,90 +127,38 @@ export default function HeroSection({ onOpenLiveModal }: HeroSectionProps) {
           aria-hidden="true"
           aria-busy="true"
         >
-          {/* Minimal palace / throne mark — lightweight SVG */}
+          {/* Distinct throne / palace mark — blocks assemble, full-edge gold light */}
           <svg
-            viewBox="0 0 120 100"
-            className="w-24 h-20 sm:w-28 sm:h-24 text-white/15"
+            viewBox="0 0 128 112"
+            className="w-28 h-24 sm:w-32 sm:h-28 text-white/18"
             fill="currentColor"
             role="img"
             aria-label="Loading"
           >
-            {/* Base platform */}
-            <rect
-              className="palace-loader-block"
-              x="18"
-              y="78"
-              width="84"
-              height="8"
-              rx="1.5"
-              style={{ animationDelay: '0.05s' }}
-            />
+            {/* Stepped base */}
+            <rect className="palace-loader-block" x="14" y="92" width="100" height="7" rx="2" style={{ animationDelay: '0.04s' }} />
+            <rect className="palace-loader-block" x="22" y="84" width="84" height="8" rx="1.5" style={{ animationDelay: '0.12s' }} />
             {/* Seat */}
-            <rect
-              className="palace-loader-block"
-              x="32"
-              y="58"
-              width="56"
-              height="20"
-              rx="1.5"
-              style={{ animationDelay: '0.18s' }}
-            />
-            {/* Left pillar */}
-            <rect
-              className="palace-loader-block"
-              x="28"
-              y="28"
-              width="10"
-              height="30"
-              rx="1"
-              style={{ animationDelay: '0.32s' }}
-            />
-            {/* Right pillar */}
-            <rect
-              className="palace-loader-block"
-              x="82"
-              y="28"
-              width="10"
-              height="30"
-              rx="1"
-              style={{ animationDelay: '0.38s' }}
-            />
-            {/* Backrest center */}
-            <rect
-              className="palace-loader-block"
-              x="48"
-              y="36"
-              width="24"
-              height="22"
-              rx="1"
-              style={{ animationDelay: '0.48s' }}
-            />
-            {/* Crown / pediment blocks */}
-            <rect
-              className="palace-loader-block"
-              x="42"
-              y="22"
-              width="36"
-              height="8"
-              rx="1"
-              style={{ animationDelay: '0.58s' }}
-            />
-            <rect
-              className="palace-loader-block"
-              x="52"
-              y="12"
-              width="16"
-              height="10"
-              rx="1"
-              style={{ animationDelay: '0.68s' }}
-            />
-            {/* Light line along the crown edge */}
+            <rect className="palace-loader-block" x="34" y="62" width="60" height="22" rx="2" style={{ animationDelay: '0.22s' }} />
+            {/* Armrests */}
+            <rect className="palace-loader-block" x="26" y="58" width="10" height="26" rx="2" style={{ animationDelay: '0.32s' }} />
+            <rect className="palace-loader-block" x="92" y="58" width="10" height="26" rx="2" style={{ animationDelay: '0.36s' }} />
+            {/* Side pillars */}
+            <rect className="palace-loader-block" x="24" y="26" width="12" height="32" rx="1.5" style={{ animationDelay: '0.44s' }} />
+            <rect className="palace-loader-block" x="92" y="26" width="12" height="32" rx="1.5" style={{ animationDelay: '0.48s' }} />
+            {/* Back panel */}
+            <rect className="palace-loader-block" x="44" y="34" width="40" height="28" rx="2" style={{ animationDelay: '0.56s' }} />
+            {/* Crown pediment */}
+            <rect className="palace-loader-block" x="38" y="22" width="52" height="10" rx="1.5" style={{ animationDelay: '0.64s' }} />
+            {/* Center jewel / apex */}
+            <rect className="palace-loader-block" x="56" y="10" width="16" height="12" rx="2" style={{ animationDelay: '0.72s' }} />
+            {/* Full perimeter light path around the throne */}
             <path
               className="palace-loader-glow"
-              d="M 28 28 L 42 22 L 52 12 L 68 12 L 78 22 L 92 28"
+              d="M 24 58 L 24 26 L 38 22 L 56 10 L 72 10 L 90 22 L 104 26 L 104 58 L 102 84 L 106 92 L 22 92 L 26 84 L 26 58 Z"
             />
           </svg>
-          <p className="mt-6 text-[11px] sm:text-xs tracking-[0.2em] uppercase text-white/35 font-medium">
+          <p className="palace-loader-label mt-6 text-[11px] sm:text-xs tracking-[0.22em] uppercase font-medium">
             Glowing Palace
           </p>
         </div>
