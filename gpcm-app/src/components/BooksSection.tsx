@@ -17,7 +17,7 @@ export default function BooksSection() {
               BOOKS &amp; TRACTS
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-zinc-900 leading-snug">
-              Liberty Library
+              Church Library
             </h2>
             <p className="mt-2 text-sm text-zinc-500 max-w-lg">
               Read ministry books and tracts online — or download the PDF to study offline.
