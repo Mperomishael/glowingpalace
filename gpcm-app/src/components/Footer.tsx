@@ -43,9 +43,9 @@ export default function Footer() {
           <div>
             <div className="uppercase text-xs tracking-widest mb-6 text-white">Bank Details</div>
             <div className="text-sm bg-white/5 p-6 rounded-3xl">
-              <div><span className="text-amber-300">Acct:</span> 8817008125</div>
+              <div><span className="text-amber-300">Acct:</span> 9377716938</div>
               <div className="mt-1"><span className="text-amber-300">Name:</span> GPCM INT'L</div>
-              <div className="mt-4 text-xs text-zinc-500">Sterling Bank</div>
+              <div className="mt-4 text-xs text-zinc-500">FLUTTERWAVE</div>
             </div>
           </div>
 
