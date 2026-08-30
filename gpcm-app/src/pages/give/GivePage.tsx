@@ -31,7 +31,7 @@ export default function GivePage() {
                 <div className="bg-white/70 border border-[#D9C4AA] rounded-xl p-4">
                   <div className="text-xs uppercase tracking-wider text-[#321C04]/60 mb-1">Account Number</div>
                   <div className="font-serif text-2xl sm:text-3xl font-bold text-[#321C04] tracking-wide">
-                    8817008125
+                    9377716938
                   </div>
                 </div>
                 <div className="bg-white/70 border border-[#D9C4AA] rounded-xl p-4">
@@ -40,10 +40,10 @@ export default function GivePage() {
                 </div>
                 <div className="bg-white/70 border border-[#D9C4AA] rounded-xl p-4">
                   <div className="text-xs uppercase tracking-wider text-[#321C04]/60 mb-1">Bank</div>
-                  <div className="font-semibold text-lg text-[#321C04]">Sterling Bank</div>
+                  <div className="font-semibold text-lg text-[#321C04]"> FLUTTERWAVE</div>
                 </div>
                 <p className="text-xs sm:text-sm text-[#321C04]/70 pt-2">
-                  After giving, you may send proof via WhatsApp for acknowledgment and prayer.
+                  May God bless you. Let's Acknowledge your giving via WhatsApp for prayers.
                 </p>
               </div>
 
@@ -55,7 +55,7 @@ export default function GivePage() {
                   className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all shadow-sm"
                 >
                   <i className="fa-brands fa-whatsapp" />
-                  Send Proof via WhatsApp
+                  Send A Message 
                 </a>
                 <Link
                   to="/"
