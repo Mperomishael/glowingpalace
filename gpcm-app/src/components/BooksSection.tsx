@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import { BookOpen, ArrowRight } from 'lucide-react';
-import { useMedia } from '../hooks/useMedia';
-import { useScrollReveal, staggerDelay } from '../hooks/useScrollReveal';
+import { Link } from "@tanstack/react-router";
+import { BookOpen, ArrowRight } from "lucide-react";
+import { useMedia } from "../hooks/useMedia";
+import { useScrollReveal, staggerDelay } from "../hooks/useScrollReveal";
 
 export default function BooksSection() {
-  const { media: books, loading } = useMedia('book', 6);
+  const { media: books, loading } = useMedia("book", 4);
   const reveal = useScrollReveal(books.length || 4);
 
   return (
@@ -14,7 +14,7 @@ export default function BooksSection() {
           <div>
             <div className="inline-flex items-center gap-1.5 bg-violet-100 text-violet-700 px-3 sm:px-4 py-1 rounded-full text-[11px] sm:text-xs font-medium mb-2">
               <BookOpen size={12} />
-              BOOKS &amp; TRACTS
+              BOOKS & TRACTS
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-zinc-900 leading-snug">
               Church Library
@@ -32,8 +32,8 @@ export default function BooksSection() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[...Array(3)].map((_, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => (
               <div key={i} className="rounded-2xl overflow-hidden">
                 <div className="aspect-[3/4] skeleton-preload" />
               </div>
@@ -48,8 +48,9 @@ export default function BooksSection() {
               return (
                 <Link
                   key={item.id}
-                  to={`/books/${item.id}`}
-                  className={`group rounded-2xl border border-zinc-200 bg-zinc-50 overflow-hidden hover:border-violet-200 hover:shadow-md flex flex-col fall-item ${reveal.visible ? 'is-in' : 'is-out'}`}
+                  to="/books/$id"
+                  params={{ id: item.id }}
+                  className={`group rounded-2xl border border-zinc-200 bg-zinc-50 overflow-hidden hover:border-violet-200 hover:shadow-md flex flex-col fall-item ${reveal.visible ? "is-in" : "is-out"}`}
                   style={{ transitionDelay: `${staggerDelay(idx, reveal.visible, books.length)}ms` }}
                 >
                   <div className="aspect-[3/4] bg-gradient-to-br from-violet-100 to-amber-50 relative overflow-hidden">

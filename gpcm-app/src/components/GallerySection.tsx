@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { X, ArrowRight } from 'lucide-react';
-import { useMedia } from '../hooks/useMedia';
-import { useScrollReveal, staggerDelay } from '../hooks/useScrollReveal';
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { X, ArrowRight } from "lucide-react";
+import { useMedia } from "../hooks/useMedia";
+import { useScrollReveal, staggerDelay } from "../hooks/useScrollReveal";
 
 export default function GallerySection() {
-  const { media, loading } = useMedia('gallery', 4);
+  const { media, loading } = useMedia("gallery", 4);
   const reveal = useScrollReveal(media.length || 4);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -14,7 +14,7 @@ export default function GallerySection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-5">
         <div className="text-center mb-7 sm:mb-10">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-900 leading-snug">
-            Moments in God&apos;s Presence
+            Moments in God's Presence
           </h2>
           <p className="mt-2 text-sm text-zinc-500">Glimpses of worship, fellowship, and ministry life.</p>
         </div>
@@ -33,7 +33,7 @@ export default function GallerySection() {
                 <div
                   key={item.id}
                   onClick={() => setSelectedImage(item.url)}
-                  className={`aspect-square rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer group fall-item ${reveal.visible ? 'is-in' : 'is-out'}`}
+                  className={`aspect-square rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer group fall-item ${reveal.visible ? "is-in" : "is-out"}`}
                   style={{ transitionDelay: `${staggerDelay(idx, reveal.visible, media.length)}ms` }}
                 >
                   <img

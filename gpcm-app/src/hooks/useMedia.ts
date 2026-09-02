@@ -1,44 +1,17 @@
-import { useState, useEffect, useCallback } from 'react';
-import { supabase, isSupabaseConfigured, mapMediaRow } from '../lib/supabase';
+import { useCallback, useEffect, useState } from "react";
+import { fetchPublishedMedia } from "@/lib/fetch-media";
+import { type MediaItem } from "@/lib/media";
 
-export interface MediaItem {
-  id: string;
-  filename: string;
-  originalName: string;
-  url: string;
-  type: 'image' | 'video' | 'audio' | 'document';
-  category: string;
-  source: 'upload' | 'youtube';
-  youtubeUrl?: string;
-  thumbnailUrl?: string;
-  downloadable: boolean;
-  status: 'pending' | 'published' | 'rejected';
-  title?: string;
-  description?: string;
-  order: number;
-  sermonDate?: string;
-  createdAt: string;
-  storagePath?: string;
-}
+let inflight: Promise<MediaItem[]> | null = null;
 
-/** Priority first (lower order = higher priority), then newest date. */
-function sortByPriority(items: MediaItem[]): MediaItem[] {
-  return [...items].sort((a, b) => {
-    const oa = a.order ?? 999;
-    const ob = b.order ?? 999;
-    if (oa !== ob) return oa - ob;
-    const da = a.sermonDate || a.createdAt || '';
-    const db = b.sermonDate || b.createdAt || '';
-    return db.localeCompare(da);
-  });
-}
-
-async function fetchFromApi(category?: string): Promise<MediaItem[]> {
-  const res = await fetch(`/api/media?_=${Date.now()}`, { cache: 'no-store' });
-  if (!res.ok) return [];
-  const data: MediaItem[] = await res.json();
-  const filtered = category ? data.filter((m) => m.category === category) : data;
-  return sortByPriority(filtered);
+function loadAll(): Promise<MediaItem[]> {
+  if (!inflight) {
+    inflight = fetchPublishedMedia().catch((err) => {
+      inflight = null;
+      throw err;
+    });
+  }
+  return inflight;
 }
 
 export function useMedia(category?: string, limit?: number) {
@@ -48,59 +21,43 @@ export function useMedia(category?: string, limit?: number) {
   const fetchMedia = useCallback(async () => {
     setLoading(true);
     try {
-      if (isSupabaseConfigured && supabase) {
-        let q = supabase
-          .from('media')
-          .select('*')
-          .eq('status', 'published')
-          .order('order', { ascending: true })
-          .order('created_at', { ascending: false });
-
-        if (category) q = q.eq('category', category);
-
-        const { data, error } = await q;
-        if (error) throw error;
-        let items = sortByPriority((data ?? []).map(mapMediaRow));
-        if (limit && limit > 0) items = items.slice(0, limit);
-        setMedia(items);
-      } else {
-        let items = await fetchFromApi(category);
-        if (limit && limit > 0) items = items.slice(0, limit);
-        setMedia(items);
-      }
+      inflight = null;
+      let items = await loadAll();
+      if (category) items = items.filter((m) => m.category === category);
+      if (limit && limit > 0) items = items.slice(0, limit);
+      setMedia(items);
     } catch (err) {
-      console.error('useMedia', err);
-      try {
-        let items = await fetchFromApi(category);
-        if (limit && limit > 0) items = items.slice(0, limit);
-        setMedia(items);
-      } catch {
-        setMedia([]);
-      }
+      console.error("useMedia", err);
+      setMedia([]);
     } finally {
       setLoading(false);
     }
   }, [category, limit]);
 
   useEffect(() => {
-    fetchMedia();
-  }, [fetchMedia]);
+    let cancelled = false;
+    setLoading(true);
+    loadAll()
+      .then((all) => {
+        if (cancelled) return;
+        let items = category ? all.filter((m) => m.category === category) : all;
+        if (limit && limit > 0) items = items.slice(0, limit);
+        setMedia(items);
+      })
+      .catch((err) => {
+        console.error("useMedia", err);
+        if (!cancelled) setMedia([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [category, limit]);
 
   return { media, loading, refresh: fetchMedia };
 }
 
-export function formatSermonDate(item: MediaItem): string {
-  const raw = item.sermonDate || item.createdAt;
-  if (!raw) return '';
-  try {
-    const d = new Date(raw.includes('T') ? raw : `${raw}T12:00:00`);
-    return new Intl.DateTimeFormat('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    }).format(d);
-  } catch {
-    return raw;
-  }
-}
+export type { MediaItem } from "@/lib/media";
+export { formatSermonDate } from "@/lib/media";

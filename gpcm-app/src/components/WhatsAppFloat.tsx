@@ -19,7 +19,7 @@ function matchReply(raw: string): Reply {
   if (/live|stream|watch|broadcast|youtube|facebook/.test(q)) {
     return {
       type: 'answer',
-      text: 'You can join Sunday Service live every Sunday at 9:00 AM WAT.\n\nOpen Watch Live on the site for Facebook or YouTube, or ask me to connect you to someone.',
+      text: 'You can join Sunday Service live every Sunday at 9:00 AM WAT.\n\nOpen Watch Live on the site for Facebook, YouTube, or TikTok, or ask me to connect you to someone.',
     };
   }
   if (/service|sunday|worship|time|when|schedule/.test(q)) {
@@ -37,7 +37,7 @@ function matchReply(raw: string): Reply {
   if (/give|offering|tithe|donate|partner|account|bank|seed/.test(q)) {
     return {
       type: 'answer',
-      text: 'Thank you for partnering with us.\n\nSterling Bank\nAccount: 8817008125\nName: GPCM INT’L\n\nFull details are on the Give page. After giving, you may send proof via WhatsApp for prayer covering.',
+      text: 'Thank you for partnering with us.\n\nFlutterwave\nAccount: 9377716938\nName: GPCM INT’L\n\nTap the account number on the Give page to copy it. After giving, you may send proof via WhatsApp for prayer covering.',
     };
   }
   if (/bishop|overseer|clement|founder|leader|go\b|general overseer/.test(q)) {

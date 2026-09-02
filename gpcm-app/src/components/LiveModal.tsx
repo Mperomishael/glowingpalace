@@ -1,3 +1,5 @@
+import { LIVE_LINKS } from "@/lib/site";
+import { TikTokIcon } from "./TikTokIcon";
 
 interface LiveModalProps {
   isOpen: boolean;
@@ -15,10 +17,8 @@ export default function LiveModal({ isOpen, onClose }: LiveModalProps) {
       <div
         className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/25 bg-white/15 shadow-2xl backdrop-blur-2xl"
         style={{
-          background:
-            'linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 100%)',
-          boxShadow:
-            '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25)',
+          background: "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 100%)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25)",
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -44,7 +44,7 @@ export default function LiveModal({ isOpen, onClose }: LiveModalProps) {
 
           <div className="space-y-3">
             <a
-              href="https://www.facebook.com/people/Glowing-Palace/61581418854698"
+              href={LIVE_LINKS.facebook}
               target="_blank"
               rel="noreferrer"
               className="w-full py-3.5 bg-[#1877F2]/90 hover:bg-[#1877F2] text-white rounded-2xl font-semibold flex items-center justify-center gap-2.5 transition-all text-sm backdrop-blur-sm border border-white/10"
@@ -53,13 +53,22 @@ export default function LiveModal({ isOpen, onClose }: LiveModalProps) {
               Watch on Facebook
             </a>
             <a
-              href="https://youtube.com/@palaceofworshippers"
+              href={LIVE_LINKS.youtube}
               target="_blank"
               rel="noreferrer"
               className="w-full py-3.5 bg-[#FF0000]/90 hover:bg-[#FF0000] text-white rounded-2xl font-semibold flex items-center justify-center gap-2.5 transition-all text-sm backdrop-blur-sm border border-white/10"
             >
               <i className="fa-brands fa-youtube" />
               Watch on YouTube
+            </a>
+            <a
+              href={LIVE_LINKS.tiktok}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-3.5 bg-zinc-950/90 hover:bg-zinc-950 text-white rounded-2xl font-semibold flex items-center justify-center gap-2.5 transition-all text-sm backdrop-blur-sm border border-white/10"
+            >
+              <TikTokIcon size={18} />
+              Watch on TikTok
             </a>
           </div>
         </div>

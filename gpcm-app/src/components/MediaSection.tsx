@@ -1,22 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Play, Headphones, Download, X, Maximize2, ArrowRight, Calendar } from 'lucide-react';
-import { useMedia, formatSermonDate } from '../hooks/useMedia';
-import { useScrollReveal, staggerDelay } from '../hooks/useScrollReveal';
-
-function youtubeEmbedUrl(youtubeUrl?: string) {
-  if (!youtubeUrl) return '';
-  const match = youtubeUrl.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/);
-  const id = match?.[1];
-  return id ? `https://www.youtube.com/embed/${id}?autoplay=1&fs=1&rel=0` : '';
-}
+import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { Play, Headphones, Download, X, Maximize2, ArrowRight, Calendar } from "lucide-react";
+import { useMedia, formatSermonDate } from "../hooks/useMedia";
+import { useScrollReveal, staggerDelay } from "../hooks/useScrollReveal";
+import { youtubeEmbedUrl } from "@/lib/media";
 
 export default function MediaSection() {
-  const { media: videos, loading: loadingV } = useMedia('sermon_video', 6);
-  const { media: audios, loading: loadingA } = useMedia('sermon_audio', 4);
+  const { media: videos, loading: loadingV } = useMedia("sermon_video", 4);
+  const { media: audios, loading: loadingA } = useMedia("sermon_audio", 4);
   const loading = loadingV || loadingA;
-  const videoReveal = useScrollReveal(videos.length || 3);
-  const audioReveal = useScrollReveal(audios.length || 2);
+  const videoReveal = useScrollReveal(videos.length || 4);
+  const audioReveal = useScrollReveal(audios.length || 4);
   const [playing, setPlaying] = useState<{ url: string; isYoutube: boolean; title?: string } | null>(null);
   const playerRef = useRef<HTMLDivElement>(null);
 
@@ -26,7 +20,9 @@ export default function MediaSection() {
     const goFs = async () => {
       try {
         if (el.requestFullscreen) await el.requestFullscreen();
-        else if ((el as any).webkitRequestFullscreen) (el as any).webkitRequestFullscreen();
+        else if ((el as HTMLDivElement & { webkitRequestFullscreen?: () => void }).webkitRequestFullscreen) {
+          (el as HTMLDivElement & { webkitRequestFullscreen: () => void }).webkitRequestFullscreen();
+        }
       } catch {
         /* browser may block without gesture chain — modal still works */
       }
@@ -48,10 +44,10 @@ export default function MediaSection() {
         <div className="text-center mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-1.5 bg-white/10 text-amber-300 px-3 sm:px-4 py-1 rounded-full text-[11px] sm:text-xs font-medium mb-2 sm:mb-3">
             <Play size={12} />
-            WATCH &amp; LISTEN
+            WATCH & LISTEN
           </div>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold leading-snug">
-            Latest Sermons &amp; Gospel Audio
+            Latest Sermons & Gospel Audio
           </h2>
           <p className="mt-2 text-sm text-zinc-400 max-w-lg mx-auto">
             Messages by Bishop Dr. Ilaya O. Clement — stream or download and be strengthened in the Word.
@@ -59,8 +55,8 @@ export default function MediaSection() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[...Array(3)].map((_, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => (
               <div key={i} className="aspect-video rounded-2xl skeleton-preload-dark" />
             ))}
           </div>
@@ -81,9 +77,9 @@ export default function MediaSection() {
               {videos.length === 0 ? (
                 <p className="text-zinc-500 text-sm">Videos will appear here once published from Admin.</p>
               ) : (
-                <div ref={videoReveal.containerRef as React.RefObject<HTMLDivElement>} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div ref={videoReveal.containerRef as React.RefObject<HTMLDivElement>} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {videos.map((item, idx) => {
-                    const isYoutube = item.source === 'youtube';
+                    const isYoutube = item.source === "youtube";
                     const thumb = isYoutube ? item.thumbnailUrl : item.url;
                     const dateLabel = formatSermonDate(item);
                     return (
@@ -96,7 +92,7 @@ export default function MediaSection() {
                             title: item.title || item.originalName,
                           })
                         }
-                        className={`group rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-left fall-item ${videoReveal.visible ? 'is-in' : 'is-out'}`}
+                        className={`group rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-left fall-item ${videoReveal.visible ? "is-in" : "is-out"}`}
                         style={{ transitionDelay: `${staggerDelay(idx, videoReveal.visible, videos.length)}ms` }}
                       >
                         <div className="aspect-video bg-zinc-800 relative">
@@ -149,11 +145,11 @@ export default function MediaSection() {
               {audios.length === 0 ? (
                 <p className="text-zinc-500 text-sm">Audio messages will appear here once published from Admin.</p>
               ) : (
-                <div ref={audioReveal.containerRef as React.RefObject<HTMLDivElement>} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div ref={audioReveal.containerRef as React.RefObject<HTMLDivElement>} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   {audios.map((item, idx) => (
                     <div
                       key={item.id}
-                      className={`rounded-2xl border border-white/10 bg-white/5 p-4 flex flex-col gap-3 fall-item ${audioReveal.visible ? 'is-in' : 'is-out'}`}
+                      className={`rounded-2xl border border-white/10 bg-white/5 p-4 flex flex-col gap-3 fall-item ${audioReveal.visible ? "is-in" : "is-out"}`}
                       style={{ transitionDelay: `${staggerDelay(idx, audioReveal.visible, audios.length)}ms` }}
                     >
                       <div className="flex items-center gap-3">
@@ -192,10 +188,7 @@ export default function MediaSection() {
       </div>
 
       {playing && (
-        <div
-          className="fixed inset-0 bg-black z-[200] flex items-center justify-center"
-          onClick={exitFs}
-        >
+        <div className="fixed inset-0 bg-black z-[200] flex items-center justify-center" onClick={exitFs}>
           <div
             ref={playerRef}
             className="relative w-full h-full max-w-[100vw] max-h-[100vh] bg-black"
@@ -211,7 +204,7 @@ export default function MediaSection() {
             {playing.isYoutube ? (
               <iframe
                 src={youtubeEmbedUrl(playing.url)}
-                title={playing.title || 'Sermon video'}
+                title={playing.title || "Sermon video"}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                 allowFullScreen
                 className="w-full h-full border-0"

@@ -1,21 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 
-interface NavbarProps {
-  onOpenLiveModal: () => void;
-}
-
-export default function Navbar({ onOpenLiveModal: _onOpenLiveModal }: NavbarProps) {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
-  const isHome = location.pathname === '/';
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const toggleMobileMenu = () => setIsOpen((prev) => !prev);
@@ -23,28 +19,29 @@ export default function Navbar({ onOpenLiveModal: _onOpenLiveModal }: NavbarProp
   const smoothScrollTo = (sectionId: string) => {
     setIsOpen(false);
     if (isHome) {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
     } else {
-      navigate(`/#${sectionId}`);
+      void navigate({ to: "/", hash: sectionId });
     }
   };
 
   const navLinks = [
-    { path: '/', label: 'Home', id: 'home' },
-    { path: '/about', label: 'About', id: 'about' },
-    { path: '/General-Overseer', label: 'Overseer', id: null },
-    { path: '/ministries', label: 'Ministries', id: 'ministries' },
-    { path: '/contact', label: 'Contact', id: 'contact' },
-    { path: '/gallery', label: 'Gallery', id: null },
-  ];
+    { path: "/", label: "Home", id: "home" },
+    { path: "/about", label: "About", id: "about" },
+    { path: "/general-overseer", label: "Overseer", id: null },
+    { path: "/ministries", label: "Ministries", id: "ministries" },
+    { path: "/contact", label: "Contact", id: "contact" },
+    { path: "/gallery", label: "Gallery", id: null },
+  ] as const;
 
   return (
     <nav
       id="nav"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
-        ${scrolled
-          ? 'bg-white/55 backdrop-blur-xl border-b border-white/25 shadow-[0_4px_24px_rgba(0,0,0,0.06)]'
-          : 'bg-white/25 backdrop-blur-lg border-b border-white/15'
+        ${
+          scrolled
+            ? "bg-white/55 backdrop-blur-xl border-b border-white/25 shadow-[0_4px_24px_rgba(0,0,0,0.06)]"
+            : "bg-white/25 backdrop-blur-lg border-b border-white/15"
         }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-6">
@@ -56,7 +53,7 @@ export default function Navbar({ onOpenLiveModal: _onOpenLiveModal }: NavbarProp
                 alt="GPCM Logo"
                 className="w-12 h-12 sm:w-14 sm:h-14 object-contain"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  (e.target as HTMLImageElement).style.display = "none";
                 }}
               />
             </div>
@@ -71,8 +68,8 @@ export default function Navbar({ onOpenLiveModal: _onOpenLiveModal }: NavbarProp
           </Link>
 
           <div className="hidden lg:flex items-center gap-8 text-sm font-medium">
-            {navLinks.map(({ path, label, id }) => (
-              path === '/' && isHome && id ? (
+            {navLinks.map(({ path, label, id }) =>
+              path === "/" && isHome && id ? (
                 <a
                   key={label}
                   href={`#${id}`}
@@ -89,23 +86,19 @@ export default function Navbar({ onOpenLiveModal: _onOpenLiveModal }: NavbarProp
                   key={label}
                   to={path}
                   className={`nav-link transition-colors ${
-                    location.pathname === path
-                      ? 'text-violet-600 font-semibold'
-                      : 'text-zinc-800 hover:text-violet-600'
+                    pathname === path ? "text-violet-600 font-semibold" : "text-zinc-800 hover:text-violet-600"
                   }`}
                 >
                   {label}
                 </Link>
-              )
-            ))}
+              ),
+            )}
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/live"
-              className="px-5 py-1.5 text-sm font-semibold
-                         bg-white/35 backdrop-blur-md border border-white/40
-                         hover:bg-white/55 rounded-full transition-all text-zinc-800"
+              className="px-5 py-1.5 text-sm font-semibold bg-white/35 backdrop-blur-md border border-white/40 hover:bg-white/55 rounded-full transition-all text-zinc-800"
             >
               Watch Live
             </Link>
@@ -123,14 +116,14 @@ export default function Navbar({ onOpenLiveModal: _onOpenLiveModal }: NavbarProp
             className="lg:hidden w-9 h-9 flex items-center justify-center text-xl text-zinc-800"
             aria-label="Toggle menu"
           >
-            <i className={`fa-solid ${isOpen ? 'fa-xmark' : 'fa-bars'}`} />
+            <i className={`fa-solid ${isOpen ? "fa-xmark" : "fa-bars"}`} />
           </button>
         </div>
       </div>
 
       <div
         className={`lg:hidden overflow-hidden transition-all duration-300 ease-out ${
-          isOpen ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0'
+          isOpen ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="bg-white/50 backdrop-blur-xl border-t border-white/25 py-5 px-5">
@@ -140,9 +133,7 @@ export default function Navbar({ onOpenLiveModal: _onOpenLiveModal }: NavbarProp
                 key={label}
                 to={path}
                 onClick={() => setIsOpen(false)}
-                className={`font-medium ${
-                  location.pathname === path ? 'text-violet-600' : 'text-zinc-900'
-                }`}
+                className={`font-medium ${pathname === path ? "text-violet-600" : "text-zinc-900"}`}
               >
                 {label}
               </Link>
