@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Youtube } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { LIVE_LINKS, GIVING } from "@/lib/site";
 import { CopyableAccountNumber } from "./CopyableAccount";
 import { TikTokIcon } from "./TikTokIcon";
