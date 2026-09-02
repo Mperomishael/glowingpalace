@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { useMedia } from "../hooks/useMedia";
 import { useScrollReveal, staggerDelay } from "../hooks/useScrollReveal";
@@ -48,8 +48,7 @@ export default function BooksSection() {
               return (
                 <Link
                   key={item.id}
-                  to="/books/$id"
-                  params={{ id: item.id }}
+                  to={`/books/${item.id}`}
                   className={`group rounded-2xl border border-zinc-200 bg-zinc-50 overflow-hidden hover:border-violet-200 hover:shadow-md flex flex-col fall-item ${reveal.visible ? "is-in" : "is-out"}`}
                   style={{ transitionDelay: `${staggerDelay(idx, reveal.visible, books.length)}ms` }}
                 >
