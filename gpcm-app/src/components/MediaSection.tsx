@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Play, Headphones, Download, X, Maximize2, ArrowRight, Calendar } from "lucide-react";
 import { useMedia, formatSermonDate } from "../hooks/useMedia";
 import { useScrollReveal, staggerDelay } from "../hooks/useScrollReveal";
