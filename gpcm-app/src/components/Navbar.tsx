@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+interface NavbarProps {
+  onOpenLiveModal?: () => void;
+}
+
+export default function Navbar({ onOpenLiveModal }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const isHome = pathname === "/";
 
@@ -21,7 +25,7 @@ export default function Navbar() {
     if (isHome) {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
     } else {
-      void navigate({ to: "/", hash: sectionId });
+      navigate({ pathname: "/", hash: `#${sectionId}` });
     }
   };
 
@@ -98,6 +102,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/live"
+              onClick={() => onOpenLiveModal?.()}
               className="px-5 py-1.5 text-sm font-semibold bg-white/35 backdrop-blur-md border border-white/40 hover:bg-white/55 rounded-full transition-all text-zinc-800"
             >
               Watch Live
@@ -142,7 +147,10 @@ export default function Navbar() {
             <div className="pt-4 border-t border-zinc-200/50 flex flex-col gap-2.5">
               <Link
                 to="/live"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  onOpenLiveModal?.();
+                }}
                 className="w-full py-3 bg-white/50 border border-white/50 rounded-2xl font-semibold text-zinc-800 text-sm text-center"
               >
                 Watch Live
