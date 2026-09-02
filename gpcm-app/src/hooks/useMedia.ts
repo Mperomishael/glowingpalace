@@ -11,7 +11,7 @@ function loadAll(): Promise<MediaItem[]> {
       throw err;
     });
   }
-  return inflight;
+  return inflight as Promise<MediaItem[]>;
 }
 
 export function useMedia(category?: string, limit?: number) {
