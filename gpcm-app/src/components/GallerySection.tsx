@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { X, ArrowRight } from "lucide-react";
 import { useMedia } from "../hooks/useMedia";
 import { useScrollReveal, staggerDelay } from "../hooks/useScrollReveal";
