@@ -62,16 +62,17 @@ export const GIVE_FREQUENCIES: { value: GiveFrequency; label: string }[] = [
 
 /**
  * Static crypto wallet addresses shown when a giver's country isn't listed above.
- * REPLACE THESE PLACEHOLDERS with your real wallet addresses before going live —
- * sending crypto to the placeholder values below would send it nowhere recoverable.
+ * IMPORTANT: the label must match the actual network the address lives on — sending
+ * on the wrong network (e.g. TRC20 to a BEP20-only address) sends funds nowhere
+ * recoverable. Double-check both addresses against your wallet before going live.
  */
 export const CRYPTO_WALLETS = {
   usdt: {
-    label: 'USDT (TRC20)',
-    address: 'REPLACE_WITH_YOUR_USDT_TRC20_ADDRESS',
+    label: 'USDT (BEP20 – BNB Smart Chain)',
+    address: '0x050fcbbea49165feccb2df1ba69cfb38d2374994',
   },
   btc: {
     label: 'BTC',
-    address: 'REPLACE_WITH_YOUR_BTC_ADDRESS',
+    address: 'bc1qgkkw08qxnjh4uge47s6qry95e455sknyxa28jf',
   },
 };
