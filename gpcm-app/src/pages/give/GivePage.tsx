@@ -113,7 +113,7 @@ export default function GivePage() {
     try {
       let planId: string | undefined;
       if (frequency !== 'one_time') {
-        const planRes = await fetch('/api/give/plan', {
+        const planRes = await fetch('/api/give', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount, currency: selected.currency, interval: frequency }),
@@ -141,7 +141,7 @@ export default function GivePage() {
           try {
             const ref = response.transaction_id || response.tx_ref || txRef;
             const param = response.transaction_id ? 'transaction_id' : 'tx_ref';
-            const verifyRes = await fetch(`/api/give/verify?${param}=${encodeURIComponent(String(ref))}`);
+            const verifyRes = await fetch(`/api/give?${param}=${encodeURIComponent(String(ref))}`);
             const verifyData = await verifyRes.json();
             if (verifyRes.ok && verifyData.status === 'successful') {
               setSuccess({ amount: verifyData.amount ?? amount, currency: verifyData.currency ?? selected.currency });
