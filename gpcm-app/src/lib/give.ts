@@ -1,14 +1,42 @@
+import { GIVING } from './site';
+
+export interface GiveLocalAlternative {
+  label: string;
+  bank: string;
+  accountNumber: string;
+  accountName: string;
+}
+
 export interface GiveCountry {
   code: string;
   name: string;
   flag: string;
   currency: string;
   quickAmounts: number[];
+  /**
+   * A country-specific alternative to card payment (e.g. a bank transfer or mobile-money
+   * number). Only Nigeria has one today. Leave this unset for a country and the Give page
+   * automatically shows a "coming soon" placeholder instead — fill it in later and that
+   * country's page picks it up with no other code changes.
+   */
+  localAlternative?: GiveLocalAlternative;
 }
 
 /** Countries with a direct Flutterwave-supported local payment corner. */
 export const GIVE_COUNTRIES: GiveCountry[] = [
-  { code: 'NG', name: 'Nigeria', flag: '🇳🇬', currency: 'NGN', quickAmounts: [1000, 5000, 10000, 20000] },
+  {
+    code: 'NG',
+    name: 'Nigeria',
+    flag: '🇳🇬',
+    currency: 'NGN',
+    quickAmounts: [1000, 5000, 10000, 20000],
+    localAlternative: {
+      label: 'Bank Transfer',
+      bank: GIVING.bank,
+      accountNumber: GIVING.accountNumber,
+      accountName: GIVING.accountName,
+    },
+  },
   { code: 'GH', name: 'Ghana', flag: '🇬🇭', currency: 'GHS', quickAmounts: [20, 50, 100, 200] },
   { code: 'CM', name: 'Cameroon', flag: '🇨🇲', currency: 'XAF', quickAmounts: [2000, 5000, 10000, 20000] },
   { code: 'KE', name: 'Kenya', flag: '🇰🇪', currency: 'KES', quickAmounts: [500, 1000, 2500, 5000] },
